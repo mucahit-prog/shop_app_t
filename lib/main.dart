@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider.value(
       // create and value aynı işi görüyor.
       // create: (_) => Products(),
+      // burada yapılacak olan..
       value: Products(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

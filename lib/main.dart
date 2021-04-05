@@ -9,11 +9,11 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
+    return ChangeNotifierProvider(
       // create and value aynı işi görüyor.
       // create: (_) => Products(),
       // burada yapılacak olan..
-      value: Products(),
+      create: (ctx) => Products(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Material App',

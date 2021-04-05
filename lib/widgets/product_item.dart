@@ -14,8 +14,11 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // lsiten özelliğini kapatarak widgetin dinlenmesini kapatmış oluyoruz.
     // eğer listen: false özelliğini aktif etseydik bu widgettaki özelliklerin hiç
-    // biri dinamik olarak yönetilemeyecektir. mesela favorite butonuna tıkladığınızda çalışmayacak 
-    final product = Provider.of<Product>(context);
+    // biri dinamik olarak yönetilemeyecektir. mesela favorite butonuna tıkladığınızda çalışmayacak
+    // listen:false yaparak tüm widgetın tekrar çalışmasını engelledik, sadece gerekli
+    // widgetlar çalışıyor.
+    final product = Provider.of<Product>(context, listen: false);
+    print('product rebuilds');
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -35,14 +38,16 @@ class ProductItem extends StatelessWidget {
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black38,
-          leading: IconButton(
-            icon: Icon(
-              product.isFavorite ? Icons.favorite : Icons.favorite_border,
+          leading: Consumer<Product>(
+            builder: (ctx, product, _) => IconButton(
+              icon: Icon(
+                product.isFavorite ? Icons.favorite : Icons.favorite_border,
+              ),
+              color: Theme.of(context).accentColor,
+              onPressed: () {
+                product.toggleFavoriteStatus();
+              },
             ),
-            color: Theme.of(context).accentColor,
-            onPressed: () {
-              product.toggleFavoriteStatus();
-            },
           ),
           title: Text(
             product.title!,
